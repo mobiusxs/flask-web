@@ -42,3 +42,28 @@ docker stop web
 docker rm web
 docker image rm web
 ```
+
+## Docker Compose
+
+Create web and Postgres containers. Mount Postgres to `/data` for persistence.
+
+1. Start containers
+
+```
+docker compose up -d
+```
+
+1. Initialize database
+
+```
+docker compose exec web bash
+flask db migrate
+flask db upgrade
+exit
+```
+1. Teardown
+```
+docker compose down
+docker image rm web
+```
+
