@@ -67,3 +67,15 @@ docker compose down
 docker image rm web
 ```
 
+## Test
+1. Lint
+
+```
+flake8 --count --max-line-length=120 --max-complexity=10 --exit-zero --statistics
+```
+
+1. Test
+
+```
+pytest
+```
