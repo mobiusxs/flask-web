@@ -41,6 +41,7 @@ def register_shell_context(app):
 
 def register_error_handlers(app):
     def handler(error):
+        app.logger.error(f'{request.remote_addr} {request.method} {request.full_path} {error.code}')
         return render_template('error.html', error=error), error.code
 
     for code in [401, 404, 500]:
