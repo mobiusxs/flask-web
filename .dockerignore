@@ -4,6 +4,7 @@ __pycache__/
 data/
 .pytest_cache/
 .gitignore
+db.sqlite3
 docker-compose.yml
 LICENSE
 README.md
