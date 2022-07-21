@@ -6,6 +6,7 @@ def create_app(config='web.settings'):
     app.config.from_object(config)
     register_blueprints(app)
     register_extensions(app)
+    register_shell_context(app)
     return app
 
 
@@ -25,3 +26,13 @@ def register_extensions(app):
     admin.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+
+
+def register_shell_context(app):
+    from .extensions import db
+
+    def shell_context():
+        return {'db': db}
+
+    app.shell_context_processor(shell_context)
+
