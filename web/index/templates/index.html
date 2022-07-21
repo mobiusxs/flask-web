@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Log Book{% endblock %}
 
 {% block content %}
-  <h1>Index</h1>
-  <p>Index Page</p>
+  <h1>Log Book</h1>
+  <p>Hello, World! Please sign our log book!</p>
+  <form method="POST" action="{{ url_for('index.index') }}">
+    {{ form.hidden_tag() }}
+    {{ form.first.label }} {{ form.first(size=20) }}
+    {{ form.last.label }} {{ form.last(size=20) }}
+    <input type="submit" value="Sign">
+  </form>
 {% endblock %}
