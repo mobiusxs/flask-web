@@ -1,6 +1,9 @@
 .idea/
 __pycache__/
 .github/
+data/
+.pytest_cache/
 .gitignore
+docker-compose.yml
 LICENSE
 README.md
