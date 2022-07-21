@@ -28,6 +28,11 @@ flask db upgrade
 ```
 flask run
 ```
+
+## PyCharm Configuration
+
+![PyCharmConfiguration](https://i.imgur.com/A7d18Is.png)
+
 ## Docker
 ```
 docker build -t web .
