@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 
 def create_app(config='web.settings'):
@@ -7,6 +7,7 @@ def create_app(config='web.settings'):
     register_blueprints(app)
     register_extensions(app)
     register_shell_context(app)
+    register_error_handlers(app)
     return app
 
 
@@ -36,3 +37,10 @@ def register_shell_context(app):
 
     app.shell_context_processor(shell_context)
 
+
+def register_error_handlers(app):
+    def handler(error):
+        return render_template('error.html', error=error), error.code
+
+    for code in [401, 404, 500]:
+        app.register_error_handler(code, handler)
