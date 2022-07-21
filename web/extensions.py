@@ -11,7 +11,7 @@ migrate = Migrate()
 
 class PublicSiteLink(MenuLink):
     def get_url(self):
-        return url_for("example.index")
+        return url_for("index.index")
 
 
 # Remove duplicitous "Home" link on admin menu
