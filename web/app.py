@@ -65,5 +65,3 @@ def configure_logging(app):
     def log_request(response):
         app.logger.info(f'{request.remote_addr} {request.method} {request.full_path} {response.status_code}')
         return response
-
-
