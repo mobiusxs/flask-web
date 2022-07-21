@@ -7,4 +7,5 @@ Flask-WTF
 gunicorn
 psycopg2-binary
 
+flake8
 pytest
