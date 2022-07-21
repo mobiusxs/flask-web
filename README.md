@@ -12,7 +12,7 @@ FLASK_DEBUG=1
 FLASK_ENV=development
 FLASK_RUN_HOST=localhost
 FLASK_RUN_PORT=80
-DATABASE_URL=db.sqlite3
+DATABASE_URL=sqlite:///../db.sqlite3
 SECRET_KEY=secret
 ```
 
@@ -31,7 +31,7 @@ flask run
 
 ## PyCharm Configuration
 
-![PyCharmConfiguration](https://i.imgur.com/A7d18Is.png)
+![PyCharmConfiguration](https://i.imgur.com/9f21iNs.png)
 
 ## Docker
 ```
@@ -61,13 +61,16 @@ flask db migrate
 flask db upgrade
 exit
 ```
+
 1. Teardown
+
 ```
 docker compose down
 docker image rm web
 ```
 
 ## Test
+
 1. Lint
 
 ```
