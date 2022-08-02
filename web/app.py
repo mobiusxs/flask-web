@@ -1,4 +1,16 @@
-from flask import Flask, render_template, request
+from logging import getLogger
+from logging import DEBUG
+from logging import WARNING
+
+from flask import Flask
+from flask import render_template
+from flask import request
+
+from web import index
+from web.extensions import admin
+from web.extensions import db
+from web.extensions import migrate
+from web.logging import stream_handler
 
 
 def create_app(config='web.settings'):
@@ -13,17 +25,11 @@ def create_app(config='web.settings'):
 
 
 def register_blueprints(app):
-    from web import index
 
     app.register_blueprint(index.routes)
 
 
 def register_extensions(app):
-    from web.extensions import (
-        admin,
-        db,
-        migrate
-    )
 
     admin.init_app(app)
     db.init_app(app)
@@ -31,7 +37,6 @@ def register_extensions(app):
 
 
 def register_shell_context(app):
-    from .extensions import db
 
     def shell_context():
         return {'db': db}
@@ -49,8 +54,6 @@ def register_error_handlers(app):
 
 
 def configure_logging(app):
-    from logging import getLogger, DEBUG, WARNING
-    from web.logging import stream_handler
 
     app.logger.setLevel(DEBUG)              # default level is DEBUG
     app.logger.handlers = []                # remove default handler
