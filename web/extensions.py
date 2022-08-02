@@ -10,12 +10,14 @@ migrate = Migrate()
 
 
 class PublicSiteLink(MenuLink):
+    """Menu link leading to public site."""
+
     def get_url(self):
-        return url_for("index.index")
+        return url_for('index.index')
 
-
-# Remove duplicitous "Home" link on admin menu
-admin._menu.pop()
 
 # Add link on the admin menu leading back to main site
-admin.add_link(PublicSiteLink(name="Public Site"))
+admin.add_link(PublicSiteLink(name='Public Site'))
+
+# Remove duplicate "Home" link on admin menu
+admin._menu.pop()
