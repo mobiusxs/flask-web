@@ -12,5 +12,5 @@ def index():
         record = LogbookModel(first=first, last=last)
         db.session.add(record)
         db.session.commit()
-        flash('You signed!')
+        flash('You signed! View the database table in the Admin site.')
     return render_template('index.html', form=form)
