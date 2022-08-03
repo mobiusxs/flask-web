@@ -3,6 +3,12 @@
 Flask web application boilerplate
 
 ## Development
+1. Install dependencies
+
+```
+python -m venv venv
+python -m pip install -r requirements.txt
+```
 
 1. Set environment variables
 
