@@ -19,6 +19,7 @@ SECRET_KEY=secret
 1. Initialize database
 
 ```
+flask db init
 flask db migrate
 flask db upgrade
 ```
@@ -32,6 +33,10 @@ flask run
 ## PyCharm Configuration
 
 ![PyCharmConfiguration](https://i.imgur.com/9f21iNs.png)
+
+1. Copy the environment variables above
+1. Create a run configuration as shown and paste the variables
+1. Open Settings > Tools > Terminal and paste the variables
 
 ## Docker
 ```
