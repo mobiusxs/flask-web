@@ -6,7 +6,7 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
-from web.extensions import admin
+from web.admin import admin
 from web.extensions import db
 from web.extensions import migrate
 from web.logging import stream_handler
