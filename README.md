@@ -3,7 +3,7 @@
 Flask web application boilerplate
 
 ## Development
-1. Install dependencies
+1. Create virtual environment and install dependencies
 
 ```
 python -m venv venv
