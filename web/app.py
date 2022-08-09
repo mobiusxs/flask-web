@@ -29,6 +29,29 @@ def create_app(config='web.settings'):
     return app
 
 
+def configure_logging(app):
+    """Configure app logging handlers after removing default handlers.
+    Disable Werkzeug logging of requests and replace with own logging."""
+
+    app.logger.setLevel(DEBUG)              # default level is DEBUG
+    app.logger.handlers = []                # remove default handler
+    app.logger.addHandler(stream_handler)   # add your own handlers
+
+    @app.before_first_request
+    def set_werkzeug_level():
+        """Set Werkzeug logger to WARNING after it shows current host:port."""
+
+        werkzeug = getLogger('werkzeug')
+        werkzeug.setLevel(WARNING)
+
+    @app.after_request
+    def log_request(response):
+        """Log all requests as Werkzeug no longer does so"""
+
+        app.logger.info(f'{request.remote_addr} {request.method} {request.full_path} {response.status_code}')
+        return response
+
+
 def register_blueprints(app):
     """Register Blueprints on the app."""
 
@@ -70,27 +93,7 @@ def register_error_handlers(app):
         app.register_error_handler(code, handler)
 
 
-def configure_logging(app):
-    """Configure app logging handlers after removing default handlers.
-    Disable Werkzeug logging of requests and replace with own logging."""
 def register_commands(app):
     """Add application specific commands"""
 
-    app.logger.setLevel(DEBUG)              # default level is DEBUG
-    app.logger.handlers = []                # remove default handler
-    app.logger.addHandler(stream_handler)   # add your own handlers
-
-    @app.before_first_request
-    def set_werkzeug_level():
-        """Set Werkzeug logger to WARNING after it shows current host:port."""
-
-        werkzeug = getLogger('werkzeug')
-        werkzeug.setLevel(WARNING)
-
-    @app.after_request
-    def log_request(response):
-        """Log all requests as Werkzeug no longer does so"""
-
-        app.logger.info(f'{request.remote_addr} {request.method} {request.full_path} {response.status_code}')
-        return response
     app.cli.add_command(web)
