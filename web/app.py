@@ -9,6 +9,7 @@ from flask import request
 from web import private
 from web import public
 from web.admin import admin
+from web.commands import web
 from web.extensions import db
 from web.extensions import migrate
 from web.logging import stream_handler
@@ -24,6 +25,7 @@ def create_app(config='web.settings'):
     register_extensions(app)
     register_shell_context(app)
     register_error_handlers(app)
+    register_commands(app)
     return app
 
 
@@ -71,6 +73,8 @@ def register_error_handlers(app):
 def configure_logging(app):
     """Configure app logging handlers after removing default handlers.
     Disable Werkzeug logging of requests and replace with own logging."""
+def register_commands(app):
+    """Add application specific commands"""
 
     app.logger.setLevel(DEBUG)              # default level is DEBUG
     app.logger.handlers = []                # remove default handler
@@ -89,3 +93,4 @@ def configure_logging(app):
 
         app.logger.info(f'{request.remote_addr} {request.method} {request.full_path} {response.status_code}')
         return response
+    app.cli.add_command(web)
