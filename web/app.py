@@ -1,6 +1,7 @@
 from logging import getLogger
 from logging import DEBUG
 from logging import WARNING
+from os import environ
 
 from flask import Flask
 from flask import render_template
@@ -33,22 +34,23 @@ def configure_logging(app):
     """Configure app logging handlers after removing default handlers.
     Disable Werkzeug logging of requests and replace with own logging."""
 
-    app.logger.setLevel(DEBUG)              # default level is DEBUG
-    app.logger.handlers = []                # remove default handler
-    app.logger.addHandler(stream_handler)   # add your own handlers
-
-    @app.before_first_request
-    def set_werkzeug_level():
-        """Set Werkzeug logger to WARNING after it shows current host:port."""
-
-        werkzeug = getLogger('werkzeug')
-        werkzeug.setLevel(WARNING)
+    app.logger.setLevel(DEBUG)
+    app.logger.handlers = []  # remove default handler
+    app.logger.addHandler(stream_handler)
+    getLogger('werkzeug').setLevel(WARNING)
+    host = environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    port = environ.get('FLASK_RUN_PORT', 5000)
+    app.logger.info(f'Running on http://{host}:{port} (Press CTRL+C to quit)')
 
     @app.after_request
     def log_request(response):
         """Log all requests as Werkzeug no longer does so"""
 
-        app.logger.info(f'{request.remote_addr} {request.method} {request.full_path} {response.status_code}')
+        path = request.path
+        if request.args:
+            path = request.full_path
+
+        app.logger.info(f'{request.remote_addr} {response.status_code} {request.method} {request.scheme} {path}')
         return response
 
 
